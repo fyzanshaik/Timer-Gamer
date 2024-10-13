@@ -15,7 +15,7 @@ export const ResultModal = forwardRef<ResultModalHandle, ResultModalProps>(({ ta
 	const dialog = useRef<HTMLDialogElement | null>(null);
 
 	const userLost = remainingTime <= 0;
-	const formattedTime = (remainingTime / 1000).toFixed(2);
+	const formattedTime = (remainingTime / 1000).toFixed(4);
 	const score = Math.round((1 - remainingTime / (targetTime * 1000)) * 100);
 
 	useImperativeHandle(ref, () => ({
