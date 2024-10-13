@@ -16,15 +16,13 @@ const TimerChallenge = ({ title, targetTime }) => {
     }
 
     const handleStart = () => {
-
         timerRef.current = setInterval(() => {
-            setRemainingTime(prevRemainingTime => prevRemainingTime - 10);
+            setRemainingTime(prevRemainingTime => Math.max(prevRemainingTime - 10, 0));
         }, 10)
     }
 
     const handleStop = () => {
-        clearTimeout(timerRef.current);
-        setRemainingTime((prevState) => { return !prevState });
+        clearInterval(timerRef.current);
         dialog.current.open()
     }
 
