@@ -1,24 +1,27 @@
+import { useRef } from "react";
 import { useState } from "react";
 
 export default function Player() {
-  const [playerName, setPlayerName] = useState("");
-  const [userState, setUserState] = useState("unknown")
-
+  // const [playerName, setPlayerName] = useState("");
+  const [playerName, setPlayerName] = useState("unknown")
+  const playerNameRef = useRef();
   const handleSetName = () => {
-    if (playerName.trim()) {
-      setUserState(playerName)
+    const currentInputValue = playerNameRef.current.value;
+    if (currentInputValue.trim()) {
+      setPlayerName(currentInputValue)
+      playerNameRef.current.value = ""
     } else {
-      setUserState("unknown")
+      setPlayerName("unknown")
     }
   }
-  
+
   const handleKeyDown = (e) => { if (e.key == "Enter") handleSetName(); }
 
   return (
     <section id="player">
-      <h2>Welcome {userState} entity</h2>
+      <h2>Welcome {playerName} entity</h2>
       <p>
-        <input type="text" onChange={(e) => { setPlayerName(e.target.value) }} onKeyDown={handleKeyDown} />
+        <input type="text" ref={playerNameRef} onKeyDown={handleKeyDown} defaultValue={playerName} placeholder="Enter your name" />
         <button onClick={handleSetName} >Set Name</button>
       </p>
     </section>
