@@ -1,10 +1,11 @@
 import Player from './components/Player.jsx';
 import TimerChallenge from './components/TimerChallenge.jsx';
 import { Header } from './components/Header.jsx';
-
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   return (
     <>
+      <Analytics />
       <Header />
       <Player />
       <div id="challenges">
