@@ -6,17 +6,12 @@ import Leaderboard, { LeaderboardHandle } from './Leaderboard';
 const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, highScore, userId }) => {
 	const [remainingTime, setRemainingTime] = useState<number>(targetTime * 1000);
 	const [userHighscore, setUserHighscore] = useState<number>(highScore);
-	const [evaluatedHighScore, setEvaluatedHighScore] = useState<number>(highScore);
 
 	const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 	const dialog = useRef<{ open: () => void }>(null);
 	const leaderDialog = useRef<LeaderboardHandle>(null);
 
 	const timerIsActive = remainingTime > 0 && remainingTime < targetTime * 1000;
-
-	useEffect(() => {
-		setEvaluatedHighScore(userHighscore > highScore ? userHighscore : highScore);
-	}, [userHighscore, highScore]);
 
 	useEffect(() => {
 		if (remainingTime <= 0 && timerRef.current) {
@@ -49,17 +44,17 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 	}, [targetTime]);
 
 	const openLeaderboard = () => {
-		leaderDialog.current?.open();
+		leaderDialog.current?.fetchAndOpen();
 	};
 
 	return (
 		<>
 			<ResultModal ref={dialog} userId={userId} targetTime={targetTime} remainingTime={remainingTime} handleReset={handleReset} setUserHighScore={setUserHighscore} userHighScore={userHighscore} />
-			{userId == 1 ? null : <Leaderboard ref={leaderDialog} timerKey={`timer${targetTime}`} highScore={evaluatedHighScore} />}
+			{userId == 1 ? null : <Leaderboard ref={leaderDialog} timerKey={`timer${targetTime}`} />}
 			<section className="challenge">
 				<h2>{title}</h2>
 				<p>
-					<strong>Your highscore: {evaluatedHighScore}</strong>
+					<strong>Your highscore: {userHighscore > highScore ? userHighscore : highScore}</strong>
 				</p>
 				<p className="challenge-time">
 					{targetTime} second{targetTime > 1 ? 's' : ''}

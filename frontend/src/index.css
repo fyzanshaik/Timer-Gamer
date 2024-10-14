@@ -269,6 +269,57 @@ header p {
 	background: #051715;
 }
 
+/* Skeleton Loading Styles */
+.loading-skeleton-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem; /* Space between skeleton rows */
+	padding: 1rem 0; /* Padding around the container */
+}
+
+.skeleton-row {
+	display: flex; /* Flex layout for row items */
+	justify-content: space-between; /* Space between skeleton items */
+	padding: 0.5rem 0; /* Padding for each row */
+}
+
+.skeleton {
+	background-color: rgba(255, 255, 255, 0.1); /* Light background for skeleton */
+	border-radius: 4px; /* Rounded corners */
+	animation: shimmer 1.5s infinite; /* Shimmer animation */
+}
+
+/* Specific widths and heights for skeleton items */
+.skeleton-username {
+	width: 200px; /* Width for username skeleton */
+	height: 20px; /* Height for skeleton */
+}
+
+.skeleton-score {
+	width: 100px; /* Width for score skeleton */
+	height: 20px; /* Height for skeleton */
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+	0% {
+		background-position: -100% 0; /* Start position of the shimmer */
+	}
+	100% {
+		background-position: 100% 0; /* End position of the shimmer */
+	}
+}
+
+.skeleton {
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.1) 25%,
+		/* Lighter part of gradient */ rgba(255, 255, 255, 0.2) 50%,
+		/* Middle part of gradient */ rgba(255, 255, 255, 0.1) 75% /* Darker part of gradient */
+	);
+	background-size: 200% 100%; /* Size of the gradient for animation */
+}
+
 @keyframes slide-in-from-top {
 	0% {
 		transform: translateY(-15%);
