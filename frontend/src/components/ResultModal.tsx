@@ -27,6 +27,7 @@ export const ResultModal = forwardRef<ResultModalHandle, ResultModalProps>(({ ta
 	const updateScore = async () => {
 		if (score > userHighScore && !userLost) {
 			setUserHighScore(score);
+			new Audio('/game-bonus.wav').play();
 			try {
 				const response = await fetch(`${apiURL}/updateScore`, {
 					method: 'POST',
@@ -49,6 +50,8 @@ export const ResultModal = forwardRef<ResultModalHandle, ResultModalProps>(({ ta
 			} catch (error) {
 				console.error('Error updating score:', error);
 			}
+		} else {
+			new Audio('/space-shooter.wav').play();
 		}
 	};
 

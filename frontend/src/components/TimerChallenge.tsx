@@ -25,6 +25,7 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 	}, []);
 
 	const handleStart = useCallback(() => {
+		new Audio('/arcade-casino.wav').play();
 		if (!timerIsActive) {
 			timerRef.current = setInterval(() => {
 				setRemainingTime((prevRemainingTime) => Math.max(prevRemainingTime - 10, 0));
@@ -44,6 +45,7 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 	}, [targetTime]);
 
 	const openLeaderboard = () => {
+		new Audio('/winning-coin.wav').play();
 		leaderDialog.current?.fetchAndOpen();
 	};
 
