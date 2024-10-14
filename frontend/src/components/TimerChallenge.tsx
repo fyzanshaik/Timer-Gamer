@@ -50,7 +50,7 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 	return (
 		<>
 			<ResultModal ref={dialog} userId={userId} targetTime={targetTime} remainingTime={remainingTime} handleReset={handleReset} setUserHighScore={setUserHighscore} userHighScore={userHighscore} />
-			{userId == 1 ? null : <Leaderboard ref={leaderDialog} timerKey={`timer${targetTime}`} />}
+			{userId == 1 ? null : <Leaderboard ref={leaderDialog} timerKey={`timer${targetTime}`} highScore={userHighscore} />}
 			<section className="challenge">
 				<h2>{title}</h2>
 				<p>

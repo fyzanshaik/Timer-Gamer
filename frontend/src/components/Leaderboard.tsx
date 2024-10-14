@@ -2,6 +2,7 @@ import { useEffect, useState, forwardRef, useImperativeHandle, useRef } from 're
 
 interface LeaderboardProps {
 	timerKey: string;
+	highScore: number;
 }
 
 interface LeaderboardData {
@@ -13,7 +14,7 @@ export interface LeaderboardHandle {
 	open: () => void;
 }
 
-const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey }, ref) => {
+const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey, highScore }, ref) => {
 	const [leaderboardData, setLeaderboardData] = useState<LeaderboardData[]>([]);
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
 	console.log(leaderboardData);
@@ -35,7 +36,7 @@ const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey 
 		};
 
 		fetchLeaderboard();
-	}, [timerKey]);
+	}, [timerKey, highScore]);
 
 	return (
 		<dialog ref={dialogRef} className="leaderboard-dialog">
