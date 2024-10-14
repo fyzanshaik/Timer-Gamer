@@ -38,6 +38,11 @@ h1 em {
 	color: #00eeff;
 }
 
+#timer h1 em {
+	font-style: normal;
+	color: rgba(35, 34, 34, 0.6);
+}
+
 header p {
 	font-size: 1.2rem;
 	margin: 0;
