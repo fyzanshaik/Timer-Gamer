@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, useEffect } from 'react';
 import { ResultModal } from './ResultModal';
 import { TimerChallengeProps } from '../interfaces';
 import Leaderboard, { LeaderboardHandle } from './Leaderboard';
-
+import RandomTimer from './RandomTimer';
 const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, highScore, userId }) => {
 	const [remainingTime, setRemainingTime] = useState<number>(targetTime * 1000);
 	const [userHighscore, setUserHighscore] = useState<number>(highScore);
@@ -62,6 +62,7 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 				<p>
 					<button onClick={timerIsActive ? handleStop : handleStart}>{timerIsActive ? 'Stop the timer' : 'Start the timer'}</button>
 				</p>
+				<RandomTimer targetTime={targetTime} />
 				<p className={timerIsActive ? 'active' : ''}>{timerIsActive ? 'Timer is running' : 'Timer is inactive'}</p>
 				<p>
 					<button onClick={openLeaderboard}>View Leaderboard</button>
