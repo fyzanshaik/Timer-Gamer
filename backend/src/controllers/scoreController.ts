@@ -1,17 +1,17 @@
-import { Request, Response } from 'express';
+import { query, Request, Response } from 'express';
 import prisma from '../utils/db';
 
 export const updateScore = async (req: Request, res: Response) => {
-	const { userName, timerName, newScore } = req.body;
-
+	const { userId, timerName, newScore } = req.body;
 	const validTimers = ['timer1Score', 'timer5Score', 'timer10Score', 'timer15Score', 'timer30Score'] as const;
+	console.log(userId, timerName, newScore);
 	if (!validTimers.includes(timerName)) {
 		return res.status(400).json({ message: 'Invalid timer name.' });
 	}
 
 	try {
 		const user = await prisma.user.findUnique({
-			where: { username: userName },
+			where: { id: userId },
 			include: { scores: true },
 		});
 
@@ -112,6 +112,40 @@ export const getLeaderboard = async (req: Request, res: Response) => {
 	} catch (error) {
 		console.error('Error fetching leaderboard:', error);
 		return res.status(500).json({ message: 'Internal server error' });
+	}
+};
+
+export const getTimerLeaderBoard = async (req: Request, res: Response) => {
+	const { timerName } = req.params;
+	if (!['timer1Score', 'timer5Score', 'timer10Score', 'timer15Score', 'timer30Score'].includes(timerName as string)) {
+		return res.status(400).json({ error: 'Invalid timer name.' });
+	}
+
+	try {
+		const timerLeaderBoard = await prisma.score.findMany({
+			select: {
+				user: {
+					select: {
+						username: true,
+					},
+				},
+				[timerName as string]: true,
+			},
+			orderBy: {
+				[timerName as string]: 'desc',
+			},
+			take: 10,
+		});
+
+		// const formattedLeaderBoard = timerLeaderBoard.map((entry) => ({
+		// 	username: entry.user.username,
+		// 	score: entry[timerName as string], // Dynamically access the timer score
+		// }));
+		console.log(timerLeaderBoard);
+		res.status(200).json(timerLeaderBoard);
+	} catch (error) {
+		console.error('Error fetching leaderboard:', error);
+		res.status(500).json({ error: 'Failed to fetch leaderboard.' });
 	}
 };
 

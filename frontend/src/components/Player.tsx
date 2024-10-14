@@ -1,24 +1,53 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { PlayerProps } from '../interfaces';
 
-export default function Player() {
+const apiURL = 'http://localhost:8080/api/users';
+
+export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 	const [playerName, setPlayerName] = useState<string>('unknown');
 	const playerNameRef = useRef<HTMLInputElement | null>(null);
 
-	const handleSetName = () => {
-		if (playerNameRef.current) {
-			const currentInputValue = playerNameRef.current.value;
-			if (currentInputValue.trim()) {
-				setPlayerName(currentInputValue);
-				playerNameRef.current.value = '';
-			} else {
-				setPlayerName('unknown');
-			}
-		}
-	};
+	const fetchData = useCallback(async () => {
+		if (!playerName || playerName.trim() === 'unknown') return;
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') handleSetName();
-	};
+		try {
+			const response = await fetch(`${apiURL}/userCheck`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ userName: playerName }),
+			});
+
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+
+			const data = await response.json();
+			setUserData(data); 
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	}, [playerName, setUserData]);
+
+	useEffect(() => {
+		fetchData();
+	}, [playerName, fetchData]);
+
+	const handleSetName = useCallback(() => {
+		if (playerNameRef.current) {
+			const currentInputValue = playerNameRef.current.value.trim();
+			setPlayerName(currentInputValue || 'unknown');
+			playerNameRef.current.value = '';
+		}
+	}, []);
+
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent<HTMLInputElement>) => {
+			if (e.key === 'Enter') handleSetName();
+		},
+		[handleSetName]
+	);
 
 	return (
 		<section id="player">
@@ -29,4 +58,6 @@ export default function Player() {
 			</p>
 		</section>
 	);
-}
+};
+
+export default Player;
