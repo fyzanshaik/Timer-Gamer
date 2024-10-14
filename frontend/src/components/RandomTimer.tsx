@@ -5,16 +5,22 @@ interface RandomTimerProps {
 }
 
 const RandomTimer: React.FC<RandomTimerProps> = ({ targetTime }) => {
-	const [randNumber, setRandomNumber] = useState<number>(0);
+	const [randNumber, setRandomNumber] = useState<string>('0'); // Change initial state to string for formatting
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			let newRandomNumber;
+			let newRandomNumber: number;
+
 			do {
-				newRandomNumber = Math.round(Math.random() * targetTime); // Generate random number
+				newRandomNumber = Math.random() * targetTime; // Generate a random number in the range [0, targetTime]
 			} while (newRandomNumber === 1); // Ensure it's not 1
 
-			setRandomNumber(newRandomNumber);
+			// Format number: if it's 1, show as a decimal; otherwise, round to nearest integer
+			if (newRandomNumber === 1) {
+				setRandomNumber(newRandomNumber.toFixed(2)); // Show as a decimal with 2 fixed places
+			} else {
+				setRandomNumber(Math.round(newRandomNumber).toString()); // Round and convert to string for display
+			}
 		}, 100); // Update every 100 milliseconds
 
 		return () => clearInterval(interval); // Cleanup interval on unmount
