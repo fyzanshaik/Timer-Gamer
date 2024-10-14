@@ -30,13 +30,14 @@ const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey,
 				const response = await fetch(`https://timer-gamer-1.onrender.com/api/users/leaderboard/${timerKey}Score`);
 				const data = await response.json();
 				setLeaderboardData(data);
+				console.log(leaderboardData);
 			} catch (error) {
 				console.error('Error fetching leaderboard data:', error);
 			}
 		};
 
 		fetchLeaderboard();
-	}, [timerKey, highScore]);
+	}, [timerKey, highScore, leaderboardData]);
 
 	return (
 		<dialog ref={dialogRef} className="leaderboard-dialog">
