@@ -2,6 +2,7 @@ import Player from './components/Player.js';
 import TimerChallenge from './components/TimerChallenge.js';
 import { Header } from './components/Header.js';
 function App() {
+	
 	return (
 		<>
 			<Header />
