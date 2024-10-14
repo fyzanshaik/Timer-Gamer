@@ -26,7 +26,7 @@ const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey 
 	useEffect(() => {
 		const fetchLeaderboard = async () => {
 			try {
-				const response = await fetch(`http://localhost:8080/api/users/leaderboard/${timerKey}Score`);
+				const response = await fetch(`https://timer-gamer-1.onrender.com/api/users/leaderboard/${timerKey}Score`);
 				const data = await response.json();
 				setLeaderboardData(data);
 			} catch (error) {

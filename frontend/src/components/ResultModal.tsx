@@ -6,7 +6,7 @@ export interface ResultModalHandle {
 	open: () => void;
 }
 
-const apiURL = 'http://localhost:8080/api/users';
+const apiURL = 'https://timer-gamer-1.onrender.com/api/users';
 
 export const ResultModal = forwardRef<ResultModalHandle, ResultModalProps>(({ targetTime, remainingTime, handleReset, userId, setUserHighScore, userHighScore }, ref) => {
 	const dialog = useRef<HTMLDialogElement | null>(null);

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { PlayerProps } from '../interfaces';
 
-const apiURL = 'http://localhost:8080/api/users';
+const apiURL = 'https://timer-gamer-1.onrender.com/api/users';
 
 export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 	const [playerName, setPlayerName] = useState<string>('unknown');
@@ -24,7 +24,7 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 			}
 
 			const data = await response.json();
-			setUserData(data); 
+			setUserData(data);
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		}
