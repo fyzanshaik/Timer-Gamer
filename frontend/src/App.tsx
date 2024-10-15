@@ -33,7 +33,11 @@ function App() {
 		}
 	};
 
-	console.log(loading);
+	useEffect(() => {
+		if (!loading) {
+			new Audio('/game-start.mp3').play();
+		}
+	}, [loading]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -41,7 +45,7 @@ function App() {
 		}, 5000);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, [serverCheck]);
 
 	return (
 		<>
