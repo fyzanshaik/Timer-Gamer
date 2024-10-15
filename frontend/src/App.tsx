@@ -34,19 +34,13 @@ function App() {
 	};
 
 	useEffect(() => {
-		if (!loading) {
-			new Audio('/game-start.mp3').play();
-		}
-	}, [loading]);
-
-	useEffect(() => {
 		const interval = setInterval(() => {
 			checkServerHealth();
 		}, 5000);
 
 		return () => clearInterval(interval);
 	}, [serverCheck]);
-
+	console.log(loading);
 	return (
 		<>
 			{serverCheck ? (
