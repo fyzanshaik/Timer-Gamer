@@ -66,9 +66,11 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 				</p>
 				{timerIsActive && <RandomTimer targetTime={targetTime} />}
 				<p className={timerIsActive ? 'active' : ''}>{timerIsActive ? 'Timer is running' : 'Timer is inactive'}</p>
-				<p>
-					<button onClick={openLeaderboard}>View Leaderboard</button>
-				</p>
+				{userId !== 1 ? (
+					<p>
+						<button onClick={openLeaderboard}>View Leaderboard</button>
+					</p>
+				) : null}
 			</section>
 		</>
 	);

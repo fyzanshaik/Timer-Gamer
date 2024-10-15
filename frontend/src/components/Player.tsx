@@ -54,7 +54,7 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 	return (
 		<section id="player">
 			<h2>Welcome, Player {playerName}!</h2>
-			<p>To get high scores, please enter your name below and click "Set Name" to store it.</p>
+			<p>To get high scores & unlock leaderboard button, please enter your name below and click "Set Name" to store it.</p>
 			<div className="input-container">
 				<input type="text" ref={playerNameRef} onKeyDown={handleKeyDown} defaultValue={playerName} placeholder="Enter your name" className="name-input" />
 				<button onClick={handleSetName} className="set-name-button">
