@@ -38,7 +38,7 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 		if (playerNameRef.current) {
 			const sound = new Audio('/arcade-casino.wav');
 			sound.play();
-			const currentInputValue = playerNameRef.current.value.trim();
+			const currentInputValue = playerNameRef.current.value.trim().toLowerCase();
 			setPlayerName(currentInputValue || 'unknown');
 			playerNameRef.current.value = '';
 		}
