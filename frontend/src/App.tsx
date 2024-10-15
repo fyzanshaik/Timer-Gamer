@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
 import Player from './components/Player.js';
 import TimerChallenge from './components/TimerChallenge.js';
 import { Header } from './components/Header.js';
-import { useState } from 'react';
 import { UserData } from './interfaces.ts';
 
 function App() {
 	const [userData, setUserData] = useState<UserData | null>(null);
-
+	const [serverCheck, setServerCheck] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const userScores = userData?.scores?.[0];
 	const userId = userScores?.userId || 1;
 
@@ -18,18 +19,48 @@ function App() {
 		{ title: 'Ultimate Challenge', targetTime: 30, highScore: userScores?.timer30Score ?? 0 },
 	];
 
-	console.log(userScores);
+	const checkServerHealth = async () => {
+		try {
+			const response = await fetch('https://timer-gamer-1.onrender.com/api/users');
+			const data = await response.json();
+			if (data) {
+				setServerCheck(true);
+				setLoading(false);
+			}
+		} catch {
+			console.error('Error checking server status');
+		}
+	};
+
+	console.log(loading);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			checkServerHealth();
+		}, 5000);
+
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
 		<>
-			<Header />
-			<Player setUserData={setUserData} userData={userData} />
+			{serverCheck ? (
+				<>
+					<Header />
+					<Player setUserData={setUserData} userData={userData} />
 
-			<div id="challenges">
-				{timerChallengeArray.map(({ title, targetTime, highScore }) => (
-					<TimerChallenge key={title} title={title} targetTime={targetTime} userId={userId} highScore={highScore} />
-				))}
-			</div>
+					<div id="challenges">
+						{timerChallengeArray.map(({ title, targetTime, highScore }) => (
+							<TimerChallenge key={title} title={title} targetTime={targetTime} userId={userId} highScore={highScore} />
+						))}
+					</div>
+				</>
+			) : (
+				<div className="loading-container">
+					<div className="loading-animation"></div>
+					<h1>Checking server status... Please wait ⏳</h1>
+				</div>
+			)}
 		</>
 	);
 }

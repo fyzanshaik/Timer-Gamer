@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Router, Request, Response } from 'express';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes';
 
@@ -20,7 +20,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get('/', () => {
+app.get('/', async (req: Request, res: Response) => {
+	res.status(200).json({
+		message: 'SERVER IS UP & RUNNING',
+	});
 	console.log('working!');
 });
 

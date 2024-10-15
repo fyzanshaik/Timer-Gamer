@@ -141,7 +141,7 @@ export const getTimerLeaderBoard = async (req: Request, res: Response) => {
 		// 	username: entry.user.username,
 		// 	score: entry[timerName as string], // Dynamically access the timer score
 		// }));
-		console.log(timerLeaderBoard);
+
 		res.status(200).json(timerLeaderBoard);
 	} catch (error) {
 		console.error('Error fetching leaderboard:', error);
