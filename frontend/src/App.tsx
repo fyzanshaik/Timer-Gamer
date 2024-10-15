@@ -26,6 +26,7 @@ function App() {
 			if (data) {
 				setServerCheck(true);
 				setLoading(false);
+				new Audio('/game-start.mp3').play();
 			}
 		} catch {
 			console.error('Error checking server status');
