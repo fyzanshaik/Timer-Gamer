@@ -21,7 +21,7 @@ function App() {
 
 	const checkServerHealth = async () => {
 		try {
-			const response = await fetch('https://timer-gamer-1.onrender.com/api/users');
+			const response = await fetch('https://timer-gamer-1.onrender.com/');
 			const data = await response.json();
 			if (data) {
 				setServerCheck(true);
