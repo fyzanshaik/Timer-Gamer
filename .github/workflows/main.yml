@@ -1,15 +1,21 @@
-name: Scheduled Ping to Render Server
+name: Ping Render Server
+# This workflow is triggered at a scheduled interval of every 1 minute
 on:
   schedule:
-    - cron:  '*/1 * * * *'
+    - cron: '*/1 * * * *'  # Runs every minute
 
 jobs:
-  pinger_job:
-    name: A job to ping
+  ping_job:
+    name: Ping the Render Server
     runs-on: ubuntu-latest
-    env:
-      URL: ${{ secrets.URL }}
-      METHOD: GET  
+
     steps:
-      - id: ping
-        uses: sisodiya2421/pinger@master
+      # Checkout the repository (if needed for the action)
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Ping the Render server using curl
+      - name: Ping Render Server
+        run: |
+          echo "Pinging Render server at ${{ secrets.URL }}"
+          curl -X GET ${{ secrets.URL }} -o /dev/null -s -w "Response: %{http_code}\n"
