@@ -19,7 +19,6 @@ const Leaderboard = forwardRef<LeaderboardHandle, LeaderboardProps>(({ timerKey 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const dialogRef = useRef<HTMLDialogElement | null>(null);
-	console.log(leaderboardData);
 	useImperativeHandle(ref, () => ({
 		async fetchAndOpen() {
 			setIsLoading(true);
