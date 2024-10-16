@@ -133,6 +133,7 @@ export const getTimerLeaderBoard = async (req: Request, res: Response) => {
 		const cachedData = await redisClient.get(cacheKey);
 
 		if (cachedData) {
+			console.log('Serving from cache leaderboard ', timerName);
 			return res.status(200).json(JSON.parse(cachedData));
 		}
 

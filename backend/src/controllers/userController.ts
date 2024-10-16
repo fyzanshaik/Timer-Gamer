@@ -10,6 +10,7 @@ export const checkForUser = async (req: Request, res: Response) => {
 		const cachedData = await redisClient.get(cacheKey);
 
 		if (cachedData) {
+			console.log('Server from cache userdata');
 			return res.status(201).json(JSON.parse(cachedData));
 		}
 
