@@ -3,7 +3,7 @@ import prisma from '../utils/db';
 import redisClient from '../redisClient';
 
 export const updateScore = async (req: Request, res: Response) => {
-	const { userId, timerName, newScore } = req.body;
+	const { userId, timerName, newScore, userName } = req.body;
 	const validTimers = ['timer1Score', 'timer5Score', 'timer10Score', 'timer15Score', 'timer30Score'] as const;
 	console.log(userId, timerName, newScore);
 	if (!validTimers.includes(timerName)) {
@@ -30,7 +30,10 @@ export const updateScore = async (req: Request, res: Response) => {
 			});
 
 			const cacheKey = `leaderboard:${timerName}`;
+			const cacheKeyUser = `userInfo:${userName}`;
+
 			await redisClient.del(cacheKey);
+			await redisClient.del(cacheKeyUser);
 
 			return res.status(200).json({ message: 'Score updated successfully.', updatedScore });
 		}

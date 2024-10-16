@@ -27,7 +27,7 @@ function App() {
 			if (data) {
 				setServerCheck(true);
 				setLoading(false);
-				console.log('Server running: ', loading);
+				console.log('Server running: ', !loading);
 			}
 		} catch {
 			console.error('Error checking server status');
