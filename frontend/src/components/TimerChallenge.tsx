@@ -3,7 +3,7 @@ import { ResultModal } from './ResultModal';
 import { TimerChallengeProps } from '../interfaces';
 import Leaderboard, { LeaderboardHandle } from './Leaderboard';
 import RandomTimer from './RandomTimer';
-const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, highScore, userId }) => {
+const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, highScore, userId, userName }) => {
 	const [remainingTime, setRemainingTime] = useState<number>(targetTime * 1000);
 	const [userHighscore, setUserHighscore] = useState<number>(highScore);
 
@@ -51,7 +51,16 @@ const TimerChallenge: React.FC<TimerChallengeProps> = ({ title, targetTime, high
 
 	return (
 		<>
-			<ResultModal ref={dialog} userId={userId} targetTime={targetTime} remainingTime={remainingTime} handleReset={handleReset} setUserHighScore={setUserHighscore} userHighScore={userHighscore} />
+			<ResultModal
+				ref={dialog}
+				userId={userId}
+				targetTime={targetTime}
+				userName={userName}
+				remainingTime={remainingTime}
+				handleReset={handleReset}
+				setUserHighScore={setUserHighscore}
+				userHighScore={userHighscore}
+			/>
 			{userId == 1 ? null : <Leaderboard ref={leaderDialog} timerKey={`timer${targetTime}`} />}
 			<section className="challenge">
 				<h2>{title}</h2>

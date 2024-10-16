@@ -11,6 +11,7 @@ const corsOptions = {
 		'https://timer-gamer-nn3lfzkme-fyzanshaiks-projects.vercel.app',
 		'https://vercel.live/link/timer-gamer-git-main-fyzanshaiks-projects.vercel.app?via=project-dashboard-alias-list&p=1',
 		'https://timer-gamer-fyzanshaiks-projects.vercel.app/',
+		'http://localhost:5173/',
 	],
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	allowedHeaders: ['Content-Type', 'Authorization'],

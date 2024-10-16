@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { PlayerProps } from '../interfaces';
 
 const apiURL = 'https://timer-gamer-1.onrender.com/api/users';
+// const apiURL = 'http://localhost:8080/api/users';
 
 export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 	const [playerName, setPlayerName] = useState<string>('unknown');

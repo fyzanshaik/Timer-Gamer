@@ -1,5 +1,6 @@
-import { query, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import prisma from '../utils/db';
+import redisClient from '../redisClient';
 
 export const updateScore = async (req: Request, res: Response) => {
 	const { userId, timerName, newScore } = req.body;
@@ -27,6 +28,9 @@ export const updateScore = async (req: Request, res: Response) => {
 				where: { id: userScore.id },
 				data: { [timerName]: newScore },
 			});
+
+			const cacheKey = `leaderboard:${timerName}`;
+			await redisClient.del(cacheKey);
 
 			return res.status(200).json({ message: 'Score updated successfully.', updatedScore });
 		}
@@ -122,6 +126,13 @@ export const getTimerLeaderBoard = async (req: Request, res: Response) => {
 	}
 
 	try {
+		const cacheKey = `leaderboard:${timerName}`;
+		const cachedData = await redisClient.get(cacheKey);
+
+		if (cachedData) {
+			return res.status(200).json(JSON.parse(cachedData));
+		}
+
 		const timerLeaderBoard = await prisma.score.findMany({
 			select: {
 				user: {
@@ -136,6 +147,8 @@ export const getTimerLeaderBoard = async (req: Request, res: Response) => {
 			},
 			take: 10,
 		});
+
+		await redisClient.set(cacheKey, JSON.stringify(timerLeaderBoard));
 
 		// const formattedLeaderBoard = timerLeaderBoard.map((entry) => ({
 		// 	username: entry.user.username,

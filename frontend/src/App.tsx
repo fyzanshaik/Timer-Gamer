@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import Player from './components/Player.js';
-import TimerChallenge from './components/TimerChallenge.js';
-import { Header } from './components/Header.js';
+import { useEffect, useState, useCallback } from 'react';
+import Player from './components/Player';
+import TimerChallenge from './components/TimerChallenge';
+import { Header } from './components/Header';
 import { UserData } from './interfaces.ts';
+const apiURL = 'https://timer-gamer-1.onrender.com';
 
 function App() {
 	const [userData, setUserData] = useState<UserData | null>(null);
@@ -19,18 +20,19 @@ function App() {
 		{ title: 'Ultimate Challenge', targetTime: 30, highScore: userScores?.timer30Score ?? 0 },
 	];
 
-	const checkServerHealth = async () => {
+	const checkServerHealth = useCallback(async () => {
 		try {
-			const response = await fetch('https://timer-gamer-1.onrender.com/');
+			const response = await fetch(`${apiURL}`);
 			const data = await response.json();
 			if (data) {
 				setServerCheck(true);
 				setLoading(false);
+				console.log('Server running: ', loading);
 			}
 		} catch {
 			console.error('Error checking server status');
 		}
-	};
+	}, [loading]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -38,8 +40,8 @@ function App() {
 		}, 5000);
 
 		return () => clearInterval(interval);
-	}, [serverCheck]);
-	console.log(loading);
+	}, [checkServerHealth]);
+
 	return (
 		<>
 			{serverCheck ? (
@@ -49,7 +51,7 @@ function App() {
 
 					<div id="challenges">
 						{timerChallengeArray.map(({ title, targetTime, highScore }) => (
-							<TimerChallenge key={title} title={title} targetTime={targetTime} userId={userId} highScore={highScore} />
+							<TimerChallenge key={title} title={title} targetTime={targetTime} userId={userId} highScore={highScore} userName={userData?.username || 'Guest'} />
 						))}
 					</div>
 				</>

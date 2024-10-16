@@ -10,6 +10,8 @@ export interface ScoreData {
 
 export interface UserData {
 	message: string;
+	id: number;
+	username: string;
 	scores: ScoreData[];
 }
 
@@ -21,7 +23,8 @@ export interface PlayerProps {
 export interface TimerChallengeProps {
 	title: string;
 	userId: number;
-    	targetTime: number;
+	userName: string;
+	targetTime: number;
 	highScore: number;
 }
 
@@ -29,6 +32,7 @@ export interface ResultModalProps {
 	targetTime: number;
 	userId: number;
 	remainingTime: number;
+	userName: string;
 	userHighScore: number;
 	setUserHighScore: React.Dispatch<React.SetStateAction<number>>;
 	handleReset: () => void;
