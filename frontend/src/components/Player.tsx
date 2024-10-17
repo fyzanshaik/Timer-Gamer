@@ -26,14 +26,21 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 
 			const data = await response.json();
 			setUserData(data);
+
+			localStorage.setItem('userName', playerName);
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		}
 	}, [playerName, setUserData]);
 
 	useEffect(() => {
-		fetchData();
-	}, [playerName, fetchData]);
+		const userSession = localStorage.getItem('userName');
+		if (!userSession) {
+			fetchData();
+		} else {
+			setPlayerName(userSession);
+		}
+	}, [fetchData]);
 
 	const handleSetName = useCallback(() => {
 		if (playerNameRef.current) {
@@ -41,6 +48,7 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 			sound.play();
 			const currentInputValue = playerNameRef.current.value.trim().toLowerCase();
 			setPlayerName(currentInputValue || 'unknown');
+			localStorage.setItem('userName', currentInputValue);
 			playerNameRef.current.value = '';
 		}
 	}, []);

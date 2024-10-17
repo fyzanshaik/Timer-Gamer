@@ -11,7 +11,7 @@ export const checkForUser = async (req: Request, res: Response) => {
 
 		if (cachedData) {
 			console.log('Server from cache userdata');
-			return res.status(201).json(JSON.parse(cachedData));
+			return res.status(200).json(JSON.parse(cachedData));
 		}
 
 		const existingUser = await prisma.user.findUnique({

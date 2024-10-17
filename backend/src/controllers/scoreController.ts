@@ -154,45 +154,9 @@ export const getTimerLeaderBoard = async (req: Request, res: Response) => {
 
 		await redisClient.set(cacheKey, JSON.stringify(timerLeaderBoard));
 
-		// const formattedLeaderBoard = timerLeaderBoard.map((entry) => ({
-		// 	username: entry.user.username,
-		// 	score: entry[timerName as string], // Dynamically access the timer score
-		// }));
-
 		res.status(200).json(timerLeaderBoard);
 	} catch (error) {
 		console.error('Error fetching leaderboard:', error);
 		res.status(500).json({ error: 'Failed to fetch leaderboard.' });
 	}
 };
-
-/**
- * {
-  "timer1": [
-    { "userName": "Alice", "score": 50 },
-    { "userName": "Bob", "score": 45 }
-    // Up to 10 entries...
-  ],
-  "timer5": [
-    { "userName": "Charlie", "score": 150 },
-    { "userName": "Dave", "score": 140 }
-    // Up to 10 entries...
-  ],
-  "timer10": [
-    { "userName": "Eve", "score": 250 },
-    { "userName": "Frank", "score": 240 }
-    // Up to 10 entries...
-  ],
-  "timer15": [
-    { "userName": "Grace", "score": 350 },
-    { "userName": "Hank", "score": 340 }
-    // Up to 10 entries...
-  ],
-  "timer30": [
-    { "userName": "Ivy", "score": 450 },
-    { "userName": "Jack", "score": 440 }
-    // Up to 10 entries...
-  ]
-}
-
- */
