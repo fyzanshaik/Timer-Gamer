@@ -39,6 +39,7 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 			fetchData();
 		} else {
 			setPlayerName(userSession);
+			fetchData();
 		}
 	}, [fetchData]);
 
