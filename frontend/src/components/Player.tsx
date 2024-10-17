@@ -50,9 +50,9 @@ export const Player: React.FC<PlayerProps> = ({ setUserData }) => {
 			const currentInputValue = playerNameRef.current.value.trim().toLowerCase();
 			setPlayerName(currentInputValue || 'unknown');
 			localStorage.setItem('userName', currentInputValue);
-			playerNameRef.current.value = '';
+			playerNameRef.current.value = `${playerName}`;
 		}
-	}, []);
+	}, [playerName]);
 
 	const handleKeyDown = useCallback(
 		(e: React.KeyboardEvent<HTMLInputElement>) => {
